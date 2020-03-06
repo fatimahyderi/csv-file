@@ -1,0 +1,57 @@
+{% load static %}
+<h1>hello world</h1>
+<form action="/upload_csv/" method="POST" enctype="multipart/form-data" class="form-horizontal"> 
+    {% csrf_token %}
+    <div class="form-group">
+        <label for="name" class="col-md-3 col-sm-3 col-xs-12 control-label">File: </label>
+        <div class="col-md-8">
+            <input type="file" name="csv_file" id="csv_file" required="True" class="form-control">
+        </div>                    
+    </div>
+    <div class="form-group">                    
+        <div class="col-md-3 col-sm-3 col-xs-12 col-md-offset-3" style="margin-bottom:10px;">
+             <button class="btn btn-primary" type='submit'> <span class="glyphicon glyphicon-upload" style="margin-right:5px;"></span>Upload </button>
+        </div> 
+    </div>
+</form>
+<table border='5px' >
+    <tr>
+
+       {% for c in data %}
+           <th>
+
+               {{ c }}
+
+           </th>
+           {% endfor %}
+    </tr>
+       
+    <tr>
+       {% for d in records %}
+           
+               {% for d1 in d %}
+               <td>
+               {{ d1 }}
+
+               {% endfor %}
+           </td>
+
+    </tr>
+
+       {% endfor %}
+
+
+
+</table>
+
+<form action="/upload_csvrow/" method="POST"  enctype="multipart/form-data" class="form-horizontal">
+   {% csrf_token %}
+   
+   <select style="width:500px;" name="csv_col_names" id="" multiple>
+    <option value="all">All</option>
+    {% for c in data %}
+    <option value="{{c}}">{{c}}</option>
+    {% endfor %}
+  </select>
+  <button type="submit">Show Rows</button>   
+</form>    
